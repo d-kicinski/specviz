@@ -1,0 +1,10 @@
+kotlin/lib/kotlin-reflect.jar filter=lfs diff=lfs merge=lfs -text
+kotlin/lib/kotlin-stdlib.jar filter=lfs diff=lfs merge=lfs -text
+kotlin/lib/kotlin-stdlib-jdk7.jar filter=lfs diff=lfs merge=lfs -text
+kotlin/lib/kotlin-test.jar filter=lfs diff=lfs merge=lfs -text
+kotlin/lib/kotlin-reflect-sources.jar filter=lfs diff=lfs merge=lfs -text
+kotlin/lib/kotlin-stdlib-jdk7-sources.jar filter=lfs diff=lfs merge=lfs -text
+kotlin/lib/kotlin-stdlib-jdk8.jar filter=lfs diff=lfs merge=lfs -text
+kotlin/lib/kotlin-stdlib-jdk8-sources.jar filter=lfs diff=lfs merge=lfs -text
+kotlin/lib/kotlin-stdlib-sources.jar filter=lfs diff=lfs merge=lfs -text
+kotlin/lib/kotlin-test-sources.jar filter=lfs diff=lfs merge=lfs -text
