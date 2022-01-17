@@ -2,16 +2,12 @@
 #include <cstdio>
 #include <iostream>
 
+#include "fft.hpp"
 #include "pffft/pffft.hpp"
 #include <fstream>
 #include <iomanip>
 #include <sndfile.hh>
 
-
-typedef struct span {
-    float *buffer;
-    long length;
-} Span;
 
 auto read_file(const char *fname) -> Span
 {
@@ -33,26 +29,20 @@ auto read_file(const char *fname) -> Span
 
 int main()
 {
-    const char *fname = "/home/dkicinski/code/fft/follow.wav";
+    const char *fname = "/home/dkicinski/code/fft/out.wav";
+    std::ofstream out{"/home/dkicinski/code/fft/output_file.txt"};
 
     Span read_buffer = read_file(fname);
     std::cout << read_buffer.length << std::endl;
 
-    int fft_window = 1024;
-    int step_size = 128;
+    int fft_window = 512;
+    int step_size = 256;
 
-    pffft::Fft<float> fft{fft_window};
-    auto X = fft.valueVector();
-    auto Y = fft.spectrumVector();
-
-    std::ofstream out{"output_file.txt"};
-
+    auto spectrogram = stft(read_buffer, fft_window, step_size);
     int count = 0;
-    for (int i = 0; i < read_buffer.length - fft_window; i += step_size) {
-        std::copy(read_buffer.buffer + i, read_buffer.buffer + i + fft_window, X.begin());
-        fft.forward(X, Y);
-        for (const auto &item : Y) {
-            out << std::fixed << std::setprecision(8) << std::abs(item) << " ";
+    for (int i = 0; i < spectrogram.dims[0]; ++i) {
+        for (int j = 0; j < spectrogram.dims[1]; ++j) {
+            out << std::fixed << std::setprecision(8) << *(spectrogram.buffer + i * spectrogram.dims[1] + j) << " ";
         }
         out << std::endl;
         ++count;

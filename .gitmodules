@@ -4,3 +4,6 @@
 [submodule "libsndfile"]
 	path = libsndfile
 	url = https://github.com/libsndfile/libsndfile.git
+[submodule "pybind11"]
+	path = pybind11
+	url = https://github.com/pybind/pybind11.git
