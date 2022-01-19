@@ -3,7 +3,15 @@ cmake_policy(SET CMP0048 NEW)
 cmake_minimum_required(VERSION 3.10)
 project(fft VERSION 1.0.0 LANGUAGES CXX)
 
-option(BUILD_EXAMPLES "Build examples" ON)
+# Force default build type to Release
+if (NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE "Release" CACHE STRING
+            "Choose the type of build, options are: Debug, Release (default), RelWithDebInfo and MinSizeRel."
+            FORCE)
+endif (NOT CMAKE_BUILD_TYPE)
+
+option(BUILD_EXAMPLES "Build examples" OFF)
+option(BUILD_PYTHON "Build python bindings" ON)
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
