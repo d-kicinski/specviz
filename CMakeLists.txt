@@ -20,8 +20,11 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(COMPILE_OPTIONS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
 
 
+set(BUILD_SHARED_LIBS ON)
 add_subdirectory(pffft)
 add_subdirectory(pybind11)
+
+set_target_properties(PFFFT PROPERTIES POSITION_INDEPENDENT_CODE TRUE)
 
 add_library(fft
         fft.hpp
@@ -33,6 +36,23 @@ target_compile_options(fft PRIVATE -Werror -Wall)
 set_target_properties(fft PROPERTIES LINKER_LANGUAGE CXX)
 set_property(TARGET fft PROPERTY CXX_STANDARD 20)
 
+if (BUILD_PYTHON)
+    add_library(pyfft MODULE
+            bindings.cpp
+            )
+    pybind11_extension(pyfft)
+    pybind11_strip(pyfft)
+
+    set_target_properties(pyfft PROPERTIES
+            CXX_VISIBILITY_PRESET "hidden"
+            CUDA_VISIBILITY_PRESET "hidden")
+    target_link_libraries(pyfft PRIVATE
+            pybind11::module
+            pybind11::lto
+            fft
+            )
+
+endif ()
 
 if (BUILD_EXAMPLES)
     add_subdirectory(libsndfile)
