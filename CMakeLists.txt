@@ -52,6 +52,13 @@ if (BUILD_PYTHON)
             fft
             )
 
+    # Copy build lib into python directory with python package
+    set(PYTHON_MODULE_PATH ${CMAKE_SOURCE_DIR}/python/fft)
+    add_custom_command(TARGET pyfft POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:pyfft> ${PYTHON_MODULE_PATH}/
+            COMMENT "Copying python build library into python module"
+            )
+
 endif ()
 
 if (BUILD_EXAMPLES)

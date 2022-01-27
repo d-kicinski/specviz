@@ -1,0 +1,2 @@
+Make CMake to build correct python package
+    copy build library into python module or some place it could be easily accessible
